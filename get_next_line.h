@@ -11,7 +11,7 @@
 # include <stdio.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10000
+#  define BUFFER_SIZE 5
 # endif
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
@@ -21,6 +21,6 @@ size_t	ft_strlen(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 void	*ft_memset(void *str, int b, size_t n);
 void	*ft_calloc(size_t num, size_t size);
-char	*get_new_line(int fd);
+char	*get_next_line(int fd);
 
 #endif
