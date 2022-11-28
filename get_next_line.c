@@ -99,9 +99,9 @@ char	*get_next_line(int fd)
 {
 	char	*line;
 	int		i;
-	//int		fd1;
+	int		fd1;
 	int		fd2;
-	//fd1 = open("testes/test.txt", O_RDONLY);
+	fd1 = open("testes/test.txt", O_RDONLY);
 	fd2 = open("testes/test2.txt", O_RDONLY);
 	i = 1;
 	while (i < 17)
@@ -119,7 +119,7 @@ char	*get_next_line(int fd)
 		free(line);
 		i++;
 	}
-	//close(fd1);
+	close(fd1);
 	close(fd2);
 	return (0);
 }*/
