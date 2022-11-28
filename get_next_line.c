@@ -12,68 +12,69 @@
 
 #include "get_next_line.h"
 
-static char	*firstline(char *file)
+static char	*first_line(char *file)
 {
 	size_t	size;
 	char	*line;
 
 	size = 0;
-	if (!file)
+	if (!file[size])
 		return (0);
-	while (file[size] != '\n' && file)
+	while (file[size] != '\n' && file[size])
 		size++;
-	line = (char *)malloc(sizeof(char) * (size + 2));
-	if (!line)
-		return (0);
+	line = ft_calloc((size + 2), sizeof(char));
 	if (file[size] == '\n' || file[size] == '\0')
 		ft_strlcpy(line, file, size+1);
 	if (file[size] == '\n')
 		line[size++] = '\n';
-	line[size] = '\0';
 	return (line);
 }
 
-static char	*newfile(char *file)
+static char	*new_file(char *file)
 {
 	size_t	size;
 	char	*resto;
 	
 	size = 0;
-	while (file[size] != '\n' && file)
+	while (file[size] != '\n' && file[size])
 		size++;
 	if (!file[size])
 	{
 		free(file);
 		return (0);
 	}
-	resto = (char *)malloc(sizeof(char) * (ft_strlen(file) - size + 1));
 	size++;
-	if (!resto)
-		return (0);
-	resto = ft_substr(file, size, ft_strlen(file));
+	//resto = ft_calloc((ft_strlen(file) - size + 1), sizeof(char));
+	resto = ft_substr(file, size, ft_strlen(file)-size);
 	free(file);
 	return (resto);
 }
 
-static char	*inifile(int fd, char *file)
+static char	*ini_file(int fd, char *file)
 {
 	char	*buff;
 	ssize_t readbytes;
+	char	*temp;
 	
-	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!buff)
-		return (0);
+	if(!file)
+		file = ft_calloc(1,1);
+	if (ft_strchr(file, '\n'))
+		return (file);
+	buff = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	readbytes = 1;
-	while (!ft_strchr(file, '\n') && readbytes >= 0)
+	while (!ft_strchr(file, '\n') && readbytes > 0)
 	{
 		readbytes = read(fd, buff, BUFFER_SIZE);
-		if (readbytes < 0)
+		if (readbytes == -1)
 		{
+			free(file);
 			free(buff);
 			return(0);
 		}
 		buff[readbytes] = '\0';
-		file = ft_strjoin(file, buff);
+		temp = file;
+		file = ft_strjoin(temp, buff);
+		free(temp);
 	}
 	free(buff);
 	return (file);
@@ -86,32 +87,39 @@ char	*get_next_line(int fd)
 	
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	file = inifile(fd, file);
+	file = ini_file(fd, file);
 	if (!file)
 		return (0);
-	line = firstline(file);
-	file = newfile(file);
+	line = first_line(file);
+	file = new_file(file);
 	return (line);
 }
 	
-/*#include <stdio.h>
-#include <fcntl.h>
-int	main(void)
+/*int	main(void)
 {
 	char	*line;
 	int		i;
-	int		fd1;
-
-	fd1 = open("test.txt", O_RDONLY);
+	//int		fd1;
+	int		fd2;
+	//fd1 = open("testes/test.txt", O_RDONLY);
+	fd2 = open("testes/test2.txt", O_RDONLY);
 	i = 1;
 	while (i < 17)
 	{
 		line = get_next_line(fd1);
-		printf("line [%d]: %s\n", i, line);
+		printf("line [%d]: %s", i, line);
 		free(line);
-
 		i++;
 	}
-	close(fd1);
+	i = 1;
+	while (i < 4)
+	{
+		line = get_next_line(fd2);
+		printf("line [%d]: %s", i, line);
+		free(line);
+		i++;
+	}
+	//close(fd1);
+	close(fd2);
 	return (0);
 }*/

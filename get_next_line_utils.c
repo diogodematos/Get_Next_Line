@@ -26,6 +26,8 @@ char	*ft_strchr(const char *str, int b)
 	int	a;
 
 	a = 0;
+	if (!str)
+		return (NULL);
 	while (str[a])
 	{
 		if (str[a] == b)
@@ -71,7 +73,7 @@ size_t	ft_strlen(const char *str)
 	return (a);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(const char *s1, const char *s2)
 {
 	char			*dest;
 	unsigned int	a;
@@ -79,9 +81,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (0);
-	dest = malloc ((ft_strlen(s1) + ft_strlen(s2)) * sizeof(char) + 1);
-	if (!dest)
-		return (0);
+	dest = ft_calloc (((ft_strlen(s1) + ft_strlen(s2)) + 1), sizeof(char));
 	a = 0;
 	while (s1[a])
 	{
@@ -95,7 +95,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		a++;
 		b++;
 	}
-	dest[a] = '\0';
 	return (dest);
 }
 
@@ -120,7 +119,7 @@ void	*ft_calloc(size_t num, size_t size)
 	char			*ptr;
 
 	array = num * size;
-	ptr = malloc (array);
+	ptr = malloc(array);
 	if (!ptr)
 		return (0);
 	ft_memset(ptr, 0, array);

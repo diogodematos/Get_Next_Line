@@ -7,18 +7,18 @@
 # include <sys/types.h>
 # include <sys/uio.h>
 # include <sys/stat.h>
-//# include <fcnt1.h>
+# include <fcntl.h>
 # include <stdio.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 5
+#  define BUFFER_SIZE 42
 # endif
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strchr(const char *str, int b);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 size_t	ft_strlen(const char *str);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin(const char *s1, const char *s2);
 void	*ft_memset(void *str, int b, size_t n);
 void	*ft_calloc(size_t num, size_t size);
 char	*get_next_line(int fd);
