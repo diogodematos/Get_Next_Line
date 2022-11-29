@@ -44,7 +44,6 @@ static char	*new_file(char *file)
 		return (0);
 	}
 	size++;
-	//resto = ft_calloc((ft_strlen(file) - size + 1), sizeof(char));
 	resto = ft_substr(file, size, ft_strlen(file)-size);
 	free(file);
 	return (resto);
@@ -112,7 +111,7 @@ char	*get_next_line(int fd)
 		i++;
 	}
 	i = 1;
-	while (i < 4)
+	while (i < 38)
 	{
 		line = get_next_line(fd2);
 		printf("line [%d]: %s", i, line);
