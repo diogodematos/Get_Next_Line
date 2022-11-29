@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <unistd.h>
 # include <stdio.h>
@@ -27,11 +27,9 @@
 # endif
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
-char	*ft_strchr(const char *str, int b);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 size_t	ft_strlen(const char *str);
 char	*ft_strjoin(const char *s1, const char *s2);
-void	*ft_memset(void *str, int b, size_t n);
 void	*ft_calloc(size_t num, size_t size);
 char	*get_next_line(int fd);
 

@@ -12,6 +12,24 @@
 
 #include "get_next_line.h"
 
+static char	*ft_strchr(const char *str, int b)
+{
+	int	a;
+
+	a = 0;
+	if (!str)
+		return (NULL);
+	while (str[a])
+	{
+		if (str[a] == b)
+			return ((char *)&str[a]);
+		a++;
+	}
+	if (str[a] == b)
+		return ((char *)&str[a]);
+	return (0);
+}
+
 static char	*first_line(char *file)
 {
 	size_t	size;
@@ -24,7 +42,7 @@ static char	*first_line(char *file)
 		size++;
 	line = ft_calloc((size + 2), sizeof(char));
 	if (file[size] == '\n' || file[size] == '\0')
-		ft_strlcpy(line, file, size+1);
+		ft_strlcpy(line, file, size + 1);
 	if (file[size] == '\n')
 		line[size++] = '\n';
 	return (line);
@@ -34,7 +52,7 @@ static char	*new_file(char *file)
 {
 	size_t	size;
 	char	*resto;
-	
+
 	size = 0;
 	while (file[size] != '\n' && file[size])
 		size++;
@@ -52,11 +70,9 @@ static char	*new_file(char *file)
 static char	*ini_file(int fd, char *file)
 {
 	char	*buff;
-	ssize_t readbytes;
+	ssize_t	readbytes;
 	char	*temp;
-	
-	if(!file)
-		file = ft_calloc(1,1);
+
 	if (ft_strchr(file, '\n'))
 		return (file);
 	buff = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
@@ -68,7 +84,7 @@ static char	*ini_file(int fd, char *file)
 		{
 			free(file);
 			free(buff);
-			return(0);
+			return (0);
 		}
 		buff[readbytes] = '\0';
 		temp = file;
@@ -77,15 +93,17 @@ static char	*ini_file(int fd, char *file)
 	}
 	free(buff);
 	return (file);
-}		
+}
 
 char	*get_next_line(int fd)
 {
 	static char	*file;
-	char	*line;
-	
+	char		*line;
+
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
+	if (!file)
+		file = ft_calloc(1, 1);
 	file = ini_file(fd, file);
 	if (!file)
 		return (0);
@@ -93,7 +111,7 @@ char	*get_next_line(int fd)
 	file = new_file(file);
 	return (line);
 }
-	
+
 /*int	main(void)
 {
 	char	*line;

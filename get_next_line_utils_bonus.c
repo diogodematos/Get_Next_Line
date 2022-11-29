@@ -33,24 +33,6 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 	return (j);
 }
 
-char	*ft_strchr(const char *str, int b)
-{
-	int	a;
-
-	a = 0;
-	if (!str)
-		return (NULL);
-	while (str[a])
-	{
-		if (str[a] == b)
-			return ((char *)&str[a]);
-		a++;
-	}
-	if (str[a] == b)
-		return ((char *)&str[a]);
-	return (0);
-}
-
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char			*dest;
@@ -110,30 +92,22 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	return (dest);
 }
 
-void	*ft_memset(void *str, int b, size_t n)
-{
-	unsigned char	*p;
-	size_t			a;
-
-	a = 0;
-	p = (unsigned char *)str;
-	while (a < n)
-	{
-		p[a] = (unsigned char)b;
-		a++;
-	}
-	return (str);
-}
-
 void	*ft_calloc(size_t num, size_t size)
 {
-	unsigned int	array;
-	char			*ptr;
+	size_t	array;
+	char	*ptr;
+	size_t	i;
 
 	array = num * size;
 	ptr = malloc(array);
 	if (!ptr)
 		return (0);
-	ft_memset(ptr, 0, array);
-	return (ptr);
+	i = 0;
+	while (array > 0)
+	{
+		ptr[i] = 0;
+		i++;
+		array--;
+	}
+	return ((void *)ptr);
 }
