@@ -45,7 +45,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (0);
 	a = 0;
 	if (ft_strlen(s) >= start)
-	{	
+	{
 		while (s[start] && a != len)
 		{
 			dest[a] = s[start];
